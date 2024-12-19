@@ -127,11 +127,25 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="bishop.h" />
+    <ClInclude Include="handle.h" />
+    <ClInclude Include="king.h" />
+    <ClInclude Include="knight.h" />
+    <ClInclude Include="pawn.h" />
     <ClInclude Include="Pipe.h" />
+    <ClInclude Include="queen.h" />
+    <ClInclude Include="rook.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="bishop.cpp" />
+    <ClCompile Include="handle.cpp" />
+    <ClCompile Include="king.cpp" />
+    <ClCompile Include="knight.cpp" />
+    <ClCompile Include="pawn.cpp" />
+    <ClCompile Include="queen.cpp" />
+    <ClCompile Include="rook.cpp" />
     <ClCompile Include="Source.cpp" />
     <ClCompile Include="stdafx.cpp" />
   </ItemGroup>
