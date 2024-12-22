@@ -1,19 +1,34 @@
-#include "Rook.h"
+#include "rook.h"
 
-bool Rook::isMoveValid(const std::vector<std::string>& board, int startX, int startY, int endX, int endY) {
-    if (startX != endX && startY != endY) return false; // Rook moves in straight lines
+Rook::Rook(std::string location, bool isBlack) : Piece(location, isBlack) {
+}
 
-    int xDir = (endX - startX) ? ((endX - startX) > 0 ? 1 : -1) : 0;
-    int yDir = (endY - startY) ? ((endY - startY) > 0 ? 1 : -1) : 0;
+Rook::~Rook() {
+}
 
-    int x = startX + xDir;
-    int y = startY + yDir;
+bool Rook::isMoveValidPiece(std::string move)
+{
+	int stepsSideways = handle::moveSideways(move);
+	int stepsForwardOrBackward = handle::moveBackOrForward(move);
 
-    while (x != endX || y != endY) {
-        if (board[x][y] != '#') return false; // Path must be clear
-        x += xDir;
-        y += yDir;
-    }
+	if ((!stepsSideways && stepsForwardOrBackward) || (stepsSideways && !stepsForwardOrBackward))
+	{
+		return true;
+	}
+	else
+	{
+		return false;
+	}
+}
 
-    return true;
+char Rook::pieceType()
+{
+	if (this->isBlack())
+	{
+		return BLACK_ROOK;
+	}
+	else
+	{
+		return WHITE_ROOK;
+	}
 }

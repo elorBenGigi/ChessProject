@@ -1,12 +1,14 @@
 #pragma once
-#ifndef ROOK_H
-#define ROOK_H
-#include <vector>
-#include <string>
+#include "piece.h"
 
-class Rook {
+class Piece;
+
+class Rook : public Piece
+{
 public:
-    static bool isMoveValid(const std::vector<std::string>& board, int startX, int startY, int endX, int endY);
-};
+	Rook(std::string location, bool isBlack);
+	~Rook();
 
-#endif
+	virtual bool isMoveValidPiece(std::string move);
+	virtual char pieceType();
+};

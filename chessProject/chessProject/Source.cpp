@@ -5,6 +5,8 @@ in order to read and write information from and to the Backend
 */
 
 #include "Pipe.h"
+#include "board.h"
+
 #include <iostream>
 #include <thread>
 
@@ -16,12 +18,18 @@ using std::string;
 void main()
 {
 	srand(time_t(NULL));
-
-
+	char* message = nullptr;
 	Pipe p;
-	bool isConnect = p.connect();
-
+	King* otherKing = nullptr;
+	Board board = Board();
+	bool isConnect = false;
 	string ans;
+
+	system("start chessGraphics.exe");
+	Sleep(MODERATE_SLEEP);
+	isConnect = p.connect();
+
+
 	while (!isConnect)
 	{
 		cout << "cant connect to graphics" << endl;
@@ -31,7 +39,7 @@ void main()
 		if (ans == "0")
 		{
 			cout << "trying connect again.." << endl;
-			Sleep(5000);
+			Sleep(MODERATE_SLEEP);
 			isConnect = p.connect();
 		}
 		else
@@ -42,14 +50,14 @@ void main()
 	}
 
 
-	char msgToGraphics[1024];
+	char msgToGraphics[BUFFER_SIZE];
 	// msgToGraphics should contain the board string accord the protocol
-	// YOUR CODE
 
-	strcpy_s(msgToGraphics, "rnbkqbnrpppppppp################################PPPPPPPPRNBKQBNR1"); // just example...
+	message = board.initialBoardString();
+	strcpy_s(msgToGraphics, message);
 
-	p.sendMessageToGraphics(msgToGraphics);   // send the board string
-
+	p.sendMessageToGraphics(msgToGraphics);
+	delete message;
 	// get message from graphics
 	string msgFromGraphics = p.getMessageFromGraphics();
 
@@ -58,21 +66,43 @@ void main()
 		// should handle the string the sent from graphics
 		// according the protocol. Ex: e2e4           (move e2 to e4)
 
-		// YOUR CODE
-		strcpy_s(msgToGraphics, "YOUR CODE"); // msgToGraphics should contain the result of the operation
+		char resultCode = board.makeMove(msgFromGraphics);
 
-		/******* JUST FOR EREZ DEBUGGING ******/
-		int r = rand() % 10; // just for debugging......
-		msgToGraphics[0] = (char)(1 + '0');
-		msgToGraphics[1] = 0;
-		/******* JUST FOR EREZ DEBUGGING ******/
+		strcpy_s(msgToGraphics, &resultCode); // msgToGraphics should contain the result of the operation
+		msgToGraphics[1] = '\0';
+		
+
+		/*
+		
+			I JUST CANT GET THE CHECKMATE TO WORK ):
+		
+		*/
 
 
-		// return result to graphics		
-		p.sendMessageToGraphics(msgToGraphics);
+		if (resultCode == CHECKMATE) 
+		{
+			resultCode = VALID_MOVE_CHECK;
+			strcpy_s(msgToGraphics, &resultCode); // msgToGraphics should contain the result of the operation
+			msgToGraphics[1] = '\0';
+			p.sendMessageToGraphics(msgToGraphics);
+			board.printBoard();
+			msgFromGraphics = p.getMessageFromGraphics();
 
-		// get message from graphics
-		msgFromGraphics = p.getMessageFromGraphics();
+			resultCode = CHECKMATE;
+			strcpy_s(msgToGraphics, &resultCode); // msgToGraphics should contain the result of the operation
+			msgToGraphics[1] = '\0';
+			p.sendMessageToGraphics(msgToGraphics);
+			std::cout << "CHECKMATE\n";
+			msgFromGraphics = p.getMessageFromGraphics();
+		}
+		else
+		{
+			p.sendMessageToGraphics(msgToGraphics);
+			board.printBoard();
+
+			// get message from graphics
+			msgFromGraphics = p.getMessageFromGraphics();
+		}
 	}
 
 	p.close();

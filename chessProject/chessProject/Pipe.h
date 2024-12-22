@@ -42,7 +42,10 @@
 
 #pragma endregion
 
+using namespace std;
+
 #define BUFFER_SIZE		1024 // 1K
+#define MODERATE_SLEEP  4500 
 
 class Pipe
 {
@@ -98,7 +101,8 @@ public:
 		DWORD cbBytesWritten, cbRequestBytes;
 
 		// Send one message to the pipe.
-		cbRequestBytes = sizeof(TCHAR) * (lstrlen((chRequest)) + 1);
+
+		cbRequestBytes = sizeof(CHAR) * (strlen(chRequest) + 1);
 
 		BOOL bResult = WriteFile(			// Write to the pipe.
 			hPipe,						// Handle of the pipe
@@ -113,19 +117,20 @@ public:
 			return false;
 		}
 
-		_tprintf(_T("Sends %ld bytes; Message: \"%s\"\n"),
-			cbBytesWritten, chRequest);
+		_tprintf(_T("Sends %ld bytes\n"),
+			cbBytesWritten);
 
 		return true;
 
 	}
 
-	std::string getMessageFromGraphics()
+	string getMessageFromGraphics()
 	{
 		DWORD cbBytesRead;
 		DWORD cbReplyBytes;
-		TCHAR chReply[BUFFER_SIZE];		// Server -> Client
-
+		CHAR chReply[BUFFER_SIZE];		// Server -> Client
+		char str[5] = { 0 };
+		string s = "";
 		cbReplyBytes = sizeof(TCHAR) * BUFFER_SIZE;
 		BOOL bResult = ReadFile(			// Read from the pipe.
 			hPipe,					// Handle of the pipe
@@ -140,9 +145,14 @@ public:
 			return "";
 		}
 
-		_tprintf(_T("Receives %ld bytes; Message: \"%s\"\n"),
-			cbBytesRead, chReply);
-		std::string s = chReply;
+		_tprintf(_T("Receives %ld byte\n"),
+			cbBytesRead);
+
+		for (int i = 0; i < 4; i++)
+		{
+			str[i] = chReply[i];
+			s += str[i];
+		}
 		return s;
 
 	}

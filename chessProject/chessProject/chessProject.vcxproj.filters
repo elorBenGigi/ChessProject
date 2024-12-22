@@ -45,6 +45,15 @@
     <ClInclude Include="handle.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="board.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="piece.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="checkMate.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -72,6 +81,15 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="handle.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="board.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="piece.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="checkMate.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
