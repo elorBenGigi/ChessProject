@@ -1,6 +1,7 @@
 #pragma once
 #include "piece.h"
 #include "checkMate.h"
+#include "rook.h"
 
 #define BOARD_SIZE 8
 #define GET_SRC 2
@@ -8,6 +9,7 @@
 #define STARTING_BOARD "r###k##r################################################R###K##R"
 
 class Piece;
+class Rook;
 class King;
 class checkmate;
 
@@ -38,7 +40,6 @@ public:
 	Piece* getPiece(std::string location);
 	CODES makeMove(std::string move);
 	King* getKing(bool isBlack);
-	static King* staticGetKing(bool isBlack, Board const& _boardName);
 	bool isBlockingPiece(std::string dst, std::string src, char type);
 	char* initialBoardString();
 };

@@ -1,7 +1,10 @@
 #include "piece.h"
 #include "king.h"
 
-Piece::Piece(std::string location, bool isBlack) {
+
+
+Piece::Piece(std::string location, bool isBlack, Board& const board) : _board(board)
+{
 	_currLocation = location;
 	_isBlack = isBlack;
 	_isAlive = true;
@@ -34,7 +37,7 @@ bool Piece::isBlack()
 	return _isBlack;
 }
 
-std::string Piece::getCurrLocation()
+std::string Piece::getCurrLocation() const
 {
 	return _currLocation;
 

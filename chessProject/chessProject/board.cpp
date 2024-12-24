@@ -1,5 +1,4 @@
 #include "board.h"
-#include "rook.h"
 #include "king.h"
 
 Board::Board() : Board(STARTING_BOARD) {
@@ -21,19 +20,19 @@ Board::Board(const char str[64])
 
 	// starting board build up
 	// adding 4 rooks
-	p = new Rook("a8", true);
+	p = new Rook("a8", true, *this);
 	this->_pieces.push_back(p);
-	p = new Rook("h8", true);
+	p = new Rook("h8", true, *this);
 	this->_pieces.push_back(p);
-	p = new Rook("a1", false);
+	p = new Rook("a1", false, *this);
 	this->_pieces.push_back(p);
-	p = new Rook("h1", false);
+	p = new Rook("h1", false, *this);
 	this->_pieces.push_back(p);
 
 	// adding 2 kings and queens
-	p = new King("e1", false);
+	p = new King("e1", false, *this);
 	this->_pieces.push_back(p);
-	p = new King("e8", true);
+	p = new King("e8", true, *this);
 	this->_pieces.push_back(p);
 }
 
@@ -284,7 +283,7 @@ CODES Board::makeMove(std::string move)
 			otherKing = getKing(!getCurrPlayer());
 			resultCode = checkmate::isCheckmate(*this, otherKing, isKingAttacked(otherKing));
 		}
-		setCurrPlayer(!_currPlayer); // changing player
+		setCurrPlayer(~_currPlayer); // changing player
 	}
 
 	return resultCode;
@@ -305,11 +304,6 @@ King* Board::getKing(bool isBlack)
 		}
 	}
 	return nullptr;
-}
-
-King* Board::staticGetKing(bool isBlack, Board & _boardName)
-{
-	return _boardName.getKing(isBlack);
 }
 
 // checking if there is a piece that blocks the move

@@ -1,13 +1,13 @@
 #include "checkMate.h"
 
 // checking for a checkmate
-CODES checkmate::isCheckmate(Board& board, King* otherKing, Piece* attacker)
+CODES checkmate::isCheckmate(Board& const board, const King& otherKing, const Piece& attacker)
 {
-	if (!attacker)
+	if (!&attacker)
 	{
 		return VALID_MOVE_CHECK;
 	}
-	std::string kingLocation = otherKing->getCurrLocation(), attackerLocation = attacker->getCurrLocation(), squareBetween = kingLocation, move = "";
+	std::string kingLocation = otherKing.getCurrLocation(), attackerLocation = attacker.getCurrLocation(), squareBetween = kingLocation, move = "";
 	bool isEscapingPath = false, canAttackerBeEated = false, isBlockingPiece = false;
 	bool isCheckMate = false;
 
@@ -52,7 +52,7 @@ CODES checkmate::isCheckmate(Board& board, King* otherKing, Piece* attacker)
 }
 
 // checking if a piece of the current player can be moved to block the move between the attacking piece to the king
-bool checkmate::pieceBetween(std::string src, std::string dst, Board& board)
+bool checkmate::pieceBetween(std::string src, std::string dst, Board& const board)
 {
 	Piece* srcPiece = board.getPiece(src), * dstPiece = board.getPiece(dst);
 	std::string squareBetween = dst, move = "";

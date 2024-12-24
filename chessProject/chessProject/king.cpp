@@ -1,6 +1,6 @@
 #include "king.h"
 
-King::King(std::string location, bool isBlack) : Piece(location, isBlack)
+King::King(std::string location, bool isBlack, Board& const board) : Piece(location, isBlack, board)
 {
 }
 

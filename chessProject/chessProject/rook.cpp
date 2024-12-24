@@ -1,7 +1,7 @@
 #include "rook.h"
-#include "board.h"
 
-Rook::Rook(std::string location, bool isBlack) : Piece(location, isBlack) {
+Rook::Rook(std::string location, bool isBlack, Board& const board) : Piece(location, isBlack, board) {
+
 }
 
 Rook::~Rook() {
@@ -12,10 +12,10 @@ bool Rook::isMoveValidPiece(std::string move)
 	int stepsSideways = handle::moveSideways(move);
 	int stepsForwardOrBackward = handle::moveBackOrForward(move);
 	if (this->pieceType() == BLACK_ROOK) {
-		return Board::isKingAttacked(Board::staticGetKing());
+		return Board::isKingAttacked(_board.getKing(false));
 	}
 	if (this->pieceType() == WHITE_ROOK) {
-		return Board::isKingAttacked(Board::staticGetKing());
+		return Board::isKingAttacked(_board.getKing(true));
 	}
 		
 

@@ -2,9 +2,10 @@
 #include <vector>
 
 #include "handle.h"
+#include "board.h"
 
 
-class King;
+class Board;
 
 #define SRC_COL  0
 #define SRC_ROW 1
@@ -47,15 +48,16 @@ protected:
 	std::string _currLocation;
 	bool _isAlive;
 	bool _isBlack;
+	Board& _board;
 
 public:
-	Piece(std::string location, bool isBlack);
+	Piece(std::string location, bool isBlack, Board& const board);
 	~Piece();
 
 	void setIsAlive(bool isAlive);
 	bool isAlive();
 	bool isBlack();
-	std::string getCurrLocation();
+	std::string getCurrLocation() const; 
 
 	void setLocation(std::string location);
 
