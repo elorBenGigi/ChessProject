@@ -16,7 +16,7 @@ bool King::isMoveValidPiece(std::string move)
 
 char King::pieceType()
 {
-	if (this->isBlack())
+	if (isBlack())
 	{
 		return BLACK_KING;
 	}

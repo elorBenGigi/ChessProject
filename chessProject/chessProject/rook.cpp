@@ -1,4 +1,5 @@
 #include "rook.h"
+#include "board.h"
 
 Rook::Rook(std::string location, bool isBlack) : Piece(location, isBlack) {
 }
@@ -10,6 +11,13 @@ bool Rook::isMoveValidPiece(std::string move)
 {
 	int stepsSideways = handle::moveSideways(move);
 	int stepsForwardOrBackward = handle::moveBackOrForward(move);
+	if (this->pieceType() == BLACK_ROOK) {
+		return Board::isKingAttacked(Board::staticGetKing());
+	}
+	if (this->pieceType() == WHITE_ROOK) {
+		return Board::isKingAttacked(Board::staticGetKing());
+	}
+		
 
 	if ((!stepsSideways && stepsForwardOrBackward) || (stepsSideways && !stepsForwardOrBackward))
 	{
@@ -21,9 +29,10 @@ bool Rook::isMoveValidPiece(std::string move)
 	}
 }
 
+
 char Rook::pieceType()
 {
-	if (this->isBlack())
+	if (isBlack())
 	{
 		return BLACK_ROOK;
 	}

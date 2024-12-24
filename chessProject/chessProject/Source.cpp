@@ -51,7 +51,7 @@ void main()
 
 
 	char msgToGraphics[BUFFER_SIZE];
-	// msgToGraphics should contain the board string accord the protocol
+	// msgToGraphics should contain the board string according to the protocol
 
 	message = board.initialBoardString();
 	strcpy_s(msgToGraphics, message);

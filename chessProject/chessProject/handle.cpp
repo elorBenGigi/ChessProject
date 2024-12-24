@@ -53,6 +53,5 @@ bool handle::singleMove(std::string move)
 	{
 		return false;
 	}
-
 	return true;
 }

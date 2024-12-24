@@ -1,10 +1,11 @@
+#pragma once
 #include "piece.h"
 #include "checkMate.h"
 
 #define BOARD_SIZE 8
 #define GET_SRC 2
 #define GET_DST 2
-#define STARTING_BOARD "rnbqkbnrpppppppp################################PPPPPPPPRNBQKBNR"
+#define STARTING_BOARD "r###k##r################################################R###K##R"
 
 class Piece;
 class King;
@@ -19,6 +20,7 @@ private:
 
 public:
 	Board();
+	Board(const char str[64]);
 	~Board();
 
 	void setBoard(char x, char y, char piece);
@@ -30,12 +32,13 @@ public:
 	char getPieceAt(char x, char y);
 
 	CODES isMoveValid(std::string move);
-	Piece* isKingAttacked(King* king);
+	static Piece* isKingAttacked(King* king);
 	void printBoard();
 	bool removePiece(std::string location);
 	Piece* getPiece(std::string location);
 	CODES makeMove(std::string move);
 	King* getKing(bool isBlack);
+	static King* staticGetKing(bool isBlack, Board const& _boardName);
 	bool isBlockingPiece(std::string dst, std::string src, char type);
 	char* initialBoardString();
 };
